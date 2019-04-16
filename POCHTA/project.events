@@ -1,0 +1,312 @@
+a:1:{s:5:"form1";a:44:{s:8:"--fmedit";a:1:{s:6:"onshow";s:890:"$numbers = file_get_contents ("data\\emails.txt");
+c("listBox2")->text = $numbers;
+if ($handle = opendir('messages')) {
+
+    while (false !== ($entry = readdir($handle))) {
+
+        if ($entry != "." && $entry != "..") {
+            $combox = c("combobox1")->text;
+            if ($combox == "")
+            {
+            c("combobox1")->text = "$entry";
+            }
+            else
+            {
+            c("combobox1")->text = "$combox$entry";
+            }
+
+        }
+    }
+
+    closedir($handle);
+}
+
+$adder = c("edit5")->text;
+$domain = c("edit6")->text;
+$start = "$adder-";
+$mid1 = mt_rand (0,9999);
+$mid2 = "@";
+$mid3 = "$domain-";
+$mid4 = mt_rand (0,9999);
+$final = ".com";
+$all = "$start$mid1$mid2$mid3$mid4$final";
+c("label5")->text = $all;
+
+//////////////////////////
+HotKey::add(false, VK_F6, 'stop');
+HotKey::add(false, VK_F7, 'start');";}s:7:"button1";a:1:{s:11:"onmousedown";s:141:"$intense = c("edit4")->text;
+c("send")->interval = "$intense";
+c("send")->enable = true;
+c("label3")->text = "0";
+c("label7")->text = "";";}s:4:"send";a:1:{s:7:"ontimer";s:511:"$count = c("listBox1")->items->count;
+$numc = c("label3")->text;
+//$stat = c("edit1")->text;
+//$lnk = c("edit2")->text;
+$file = "data\\sent.txt";
+///////////////////////////////
+if ($numc != $count)
+{
+c("listBox1")->itemIndex = $numc;
+$list = c("listBox1")->items->selected;
+c("label7")->text = "$list";
+sender();
+$forlist = "\n$list";
+file_put_contents($file, $forlist, FILE_APPEND);
+}
+else
+{
+c("send")->enable = false;
+echo ("Send complete");
+}
+$numc = $numc+1;
+c("label3")->text = $numc;";}s:7:"button4";a:1:{s:11:"onmousedown";s:140:"$target = c("combobox1")->inText;
+$kav = '"';
+$opener = c("edit13")->text;
+$full  = "$kav$opener$kav messages\\$target";
+exec ("$full");";}s:7:"button2";a:1:{s:11:"onmousedown";s:102:"$kav = '"';
+$opener = c("edit13")->text;
+$full  = "$kav$opener$kav data\\smtp.dat";
+exec ("$full");";}s:9:"generator";a:1:{s:7:"ontimer";s:254:"$adder = c("edit5")->text;
+$domain = c("edit6")->text;
+$start = "$adder-";
+$mid1 = mt_rand (0,9999);
+$mid2 = "@";
+$mid3 = "$domain-";
+$mid4 = mt_rand (0,9999);
+$final = ".com";
+$all = "$start$mid1$mid2$mid3$mid4$final";
+c("label5")->text = $all;";}s:7:"button3";a:1:{s:11:"onmousedown";s:1326:"$addressed = c("edit2")->text;
+$subject = c("edit1")->text;
+$stat = c("edit3")->text;
+$name = c("fromname")->text;
+$rander = c("label5")->text;
+$userid = c("label3")->text;
+$kav = '"';
+$body = c("combobox1")->inText;
+$bodytxt1 = "messages\\$body";
+$bodytxt = "worker.dat";
+$fgt = file_get_contents ("$bodytxt1");
+$str = str_replace ("USERID", "$addressed", $fgt);
+$str2 = str_replace ("STATSERVICE", "$stat", $str);
+$fpt = file_put_contents ("$bodytxt", "$str2");
+////////////new vars///////
+$servsmtpd = c("edit7")->text;
+$portsmtpd = c("edit8")->text;
+$logadd = c("edit9")->text;
+$logpass = c("edit10")->text;
+$logdomain = c("edit11")->text;
+$idlog = c("edit12")->text;
+$varsmtp = "/Server $servsmtpd /Port $portsmtpd /Username $logadd$idlog /Password $logpass";
+$fullples = "smtp.dll /xml smtp.dat /Silent /Subject $kav$subject$kav /toAddress $addressed /HTML true /BodyTxt $bodytxt /FromName $name /FromAddress $logadd$idlog$logdomain /ReplyTo $logadd$idlog$logdomain $varsmtp";
+/////////////
+//$fullples = "smtp.dll /xml smtp.dat /Silent /Subject $kav$subject$kav /toAddress $addressed /HTML true /BodyTxt $bodytxt /FromName $name /FromAddress $rander /ReplyTo $rander";
+if ($body == "")
+{
+echo ("Не выбран файл HTML!");
+}
+else
+{
+exec ("$fullples");
+echo ("SENT!");
+echo ("$fullples");
+}";}s:6:"sender";a:1:{s:9:"onexecute";s:1294:"$addressed = c("label7")->text;
+$subject = c("edit1")->text;
+$stat = c("edit3")->text;
+$name = c("fromname")->text;
+$rander = c("label5")->text;
+$userid = c("label3")->text;
+$kav = '"';
+$body = c("combobox1")->inText;
+$bodytxt1 = "messages\\$body";
+$bodytxt = "data\\worker.dat";
+$fgt = file_get_contents ("$bodytxt1");
+$str = str_replace ("USERID", "$addressed", $fgt);
+$str2 = str_replace ("STATSERVICE", "$stat", $str);
+$fpt = file_put_contents ("$bodytxt", "$str2");
+//////////new vars/////////////////
+$servsmtpd = c("edit7")->text;
+$portsmtpd = c("edit8")->text;
+$logadd = c("edit9")->text;
+$logpass = c("edit10")->text;
+$logdomain = c("edit11")->text;
+$idlog = c("edit12")->text;
+$varsmtp = "/Server $servsmtpd /Port $portsmtpd /Username $logadd$idlog /Password $logpass";
+$fullples = "smtp.dll /xml data\\smtp.dat /Silent /Subject $kav$subject$kav /toAddress $addressed /HTML true /BodyTxt $bodytxt /FromName $name /FromAddress $logadd$idlog$logdomain /ReplyTo $logadd$idlog$logdomain $varsmtp";
+//$fullples = "smtp.dll /xml smtp.dat /Silent /Subject $kav$subject$kav /toAddress $addressed /HTML true /BodyTxt $bodytxt /FromName $name /FromAddress $rander /ReplyTo $rander";
+if ($body == "")
+{
+echo ("Не выбран файл HTML!");
+}
+else
+{
+exec ("$fullples");
+}";}s:6:"label7";N;s:4:"stop";a:1:{s:9:"onexecute";s:59:"c("send")->enable = false;
+echo ("Рассылка остановлена!");";}s:5:"start";a:1:{s:9:"onexecute";s:25:"c("send")->enable = true;";}s:7:"button5";a:1:{s:11:"onmousedown";s:25:"exec("data\\emails.txt");";}s:7:"button6";a:1:{s:11:"onmousedown";s:23:"exec("data\\sent.txt");";}s:8:"fromname";N;s:5:"memo2";N;s:5:"memo3";N;s:5:"edit5";N;s:5:"edit6";N;s:7:"label12";N;s:7:"label13";N;s:7:"label14";N;s:7:"label15";N;s:7:"label16";N;s:7:"label17";N;s:5:"edit9";N;s:6:"edit10";N;s:7:"label18";N;s:6:"edit11";N;s:7:"label19";N;s:6:"edit12";N;s:6:"image2";N;s:6:"filter";a:1:{s:7:"ontimer";s:1860:"$count = c("listBox2")->items->count;
+$numc = c("label10")->text;
+$file = c("memo3")->text;
+$radioserv = c("radioGroup1")->itemIndex;
+///////////////////////////////
+if ($numc != $count)
+{
+c("listBox2")->itemIndex = $numc;
+$list2 = c("listBox2")->items->selected;
+if(preg_match("/($list2)/i", $file))
+{
+}
+else
+{
+//////////////////
+if($radioserv == 0)
+{
+if(preg_match("/(@bk.ru|@mail.ru|@list.ru|@inbox.ru)/i", $list2))
+{
+$memo = c("memo3")->text;
+$fmem = "$memo\n$list2";
+c("listBox1")->inText = "$list2";
+c("memo3")->text= $fmem;
+}
+}
+if($radioserv == 1)
+{
+if(preg_match("/(@yandex|@ya)/i", $list2))
+{
+$memo = c("memo3")->text;
+$fmem = "$memo\n$list2";
+c("listBox1")->inText = "$list2";
+c("memo3")->text= $fmem;
+}
+}
+if($radioserv == 2)
+{
+if(preg_match("/(@gmail)/i", $list2))
+{
+$memo = c("memo3")->text;
+$fmem = "$memo\n$list2";
+c("listBox1")->inText = "$list2";
+c("memo3")->text= $fmem;
+}
+}
+//////////////////all////////////
+$checkers = c("checkList1")->checkedItems;
+$stringpreg = "sagdsgdsfhgdtw3524221321";
+if($radioserv == 3)
+{
+if ($checkers[0] != "")
+{
+$stringpreg = "$stringpreg|@bk.ru|@mail.ru|@list.ru|@inbox.ru";
+}
+if ($checkers[1] != "")
+{
+$stringpreg = "$stringpreg|@yandex|@ya";
+}
+if ($checkers[2] != "")
+{
+$stringpreg = "$stringpreg|@gmail";
+}
+if ($stringpreg == "")
+{
+$stringpreg = "sagdsgdsfhgdtw3524221321";
+}
+if(preg_match("/($stringpreg)/i", $list2))
+{
+}
+else
+{
+$memo = c("memo3")->text;
+$fmem = "$memo\n$list2";
+c("listBox1")->inText = "$list2";
+c("memo3")->text= $fmem;
+}
+}
+//////////////////
+
+////////////////
+}
+$numc = $numc+1;
+c("label10")->text = $numc;
+}
+else
+{
+$itemsnum = c("listBox1")->items->count;
+c("filter")->enable = false;
+c("label9")->text =$itemsnum;
+c("label10")->text = "0";
+c("memo3")->text = "";
+}
+/////////////////////////////";}s:7:"button7";a:1:{s:11:"onmousedown";s:80:"c("listBox1")->text = "";
+c("filter")->enable = true;
+c("label9")->text = "0";";}s:11:"radiogroup1";a:1:{s:7:"onclick";s:147:"$numeric = c("radioGroup1")->itemIndex;
+
+if($numeric == 3)
+{
+c("checkList1")->enabled = true;
+}
+else
+{
+c("checkList1")->enabled = false;
+}";}s:7:"button8";a:1:{s:11:"onmousedown";s:134:"$numbers = file_get_contents ("data\\emails.txt");
+c("listBox2")->text = $numbers;
+c("listBox1")->text = "";
+c("memo3")->text = "";";}s:5:"bash1";N;s:5:"bash2";N;s:5:"bash3";N;s:7:"button9";a:1:{s:11:"onmousedown";s:811:"$path=(winLocalPath(CSIDL_DESKTOP));
+$pathtotxt = "$path\\script.sh";
+$bash1 = c("bash1")->text;
+$stst = c("edit3")->text;
+$combox = c("combobox1")->inText;
+$strbash1 = str_replace ("REPLACESTAT", "$stst", "$bash1");
+$strbash = str_replace ("FILEBODYBULK", "$combox", "$strbash1");
+//////////////////
+
+$fromname = c("fromname")->text;
+$subedit = c("edit1")->text;
+$em1 = c("edit9")->text;
+$em2 = c("edit12")->text;
+$em3 = c("edit11")->text;
+$emus = "$em1$em2$em3";
+
+$replace2 = str_replace ("REMNET","$fromname",$strbash);
+$replace3 = str_replace ("REMADD","$emus",$replace2);
+$replace4 = str_replace ("SUBJECT","$subedit",$replace3);
+////////////////////
+
+file_put_contents($pathtotxt, "$replace4\n");
+c("listBox1")->itemIndex = 0;
+c("label20")->text = "0";
+c("bashrun")->enable = true;";}s:7:"bashrun";a:1:{s:7:"ontimer";s:646:"$count = c("listBox1")->items->count;
+$numc = c("label20")->text;
+$path=(winLocalPath(CSIDL_DESKTOP));
+$pathtotxt = "$path\\script.sh";
+$memo = c("bash2")->text;
+///////////////////////////////
+if ($numc != $count)
+{
+c("listBox1")->itemIndex = $numc;
+$list = c("listBox1")->items->selected;
+$numbre = $list;
+$replace = str_replace ("EMREP","$numbre",$memo);
+file_put_contents($pathtotxt, "$replace\n", FILE_APPEND);
+}
+else
+{
+$bashend = c("bash3")->text;
+file_put_contents($pathtotxt, "$bashend\n", FILE_APPEND);
+c("bashrun")->enable = false;
+echo ("BASH Generation complete!");
+}
+$numc = $numc+1;
+c("label20")->text = $numc;";}s:7:"iniread";a:1:{s:9:"onexecute";s:667:"$info = parse_ini_file('config.ini', true);
+///smtp////
+c("edit3")->text = $info['smtp']['statsrv'];
+c("edit7")->text = $info['smtp']['server'];
+c("edit9")->text = $info['smtp']['login'];
+c("edit10")->text = $info['smtp']['password'];
+c("edit11")->text = $info['smtp']['domain'];
+c("edit8")->text = $info['smtp']['port'];
+c("edit12")->text = $info['smtp']['id'];
+//////////misc///
+c("fromname")->text = $info['misc']['from'];
+c("edit1")->text = $info['misc']['topic'];
+c("edit4")->text = $info['misc']['timeout'];
+c("edit13")->text = $info['misc']['reader'];
+$combos = $info['misc']['indexcombo'];
+c("combobox1")->itemIndex = $combos;
+////////////////";}s:8:"button10";a:1:{s:11:"onmousedown";s:10:"iniread();";}s:6:"iniset";a:1:{s:7:"ontimer";s:10:"iniread();";}s:8:"button11";a:1:{s:11:"onmousedown";s:19:"Run ("config.ini");";}}}
